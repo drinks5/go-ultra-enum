@@ -1,0 +1,5 @@
+gonum
+.idea/
+/dist
+/bin
+.vscode
