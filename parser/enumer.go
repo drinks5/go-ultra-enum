@@ -7,13 +7,28 @@ type colorEnum struct {
 }
 type colorEle struct {
 	Name        string
-	Value       string
+	Value       int
 	Description string
 }
 
 var Color = colorEnum{
-	Red:       colorEle{Name: "Red", Value: "RED", Description: ""},
-	LightBlue: colorEle{Name: "LightBlue", Value: "LIGHT_BLUE", Description: ""},
+	Red:       colorEle{Name: "Red", Value: 2, Description: ""},
+	LightBlue: colorEle{Name: "LightBlue", Value: 1, Description: ""},
+}
+
+type geoEnum struct {
+	Lat geoEle
+	Lon geoEle
+}
+type geoEle struct {
+	Name        string
+	Value       int64
+	Description string
+}
+
+var Geo = geoEnum{
+	Lat: geoEle{Name: "Lat", Value: 2, Description: ""},
+	Lon: geoEle{Name: "Lon", Value: 1, Description: ""},
 }
 
 type statusEnum struct {
@@ -22,13 +37,13 @@ type statusEnum struct {
 }
 type statusEle struct {
 	Name        string
-	Value       int
+	Value       bool
 	Description string
 }
 
 var Status = statusEnum{
-	On:  statusEle{Name: "On", Value: 1, Description: ""},
-	Off: statusEle{Name: "Off", Value: 0, Description: ""},
+	On:  statusEle{Name: "On", Value: true, Description: ""},
+	Off: statusEle{Name: "Off", Value: false, Description: ""},
 }
 
 type sushiEnum struct {
