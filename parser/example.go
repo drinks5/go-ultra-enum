@@ -1,5 +1,6 @@
-package main
+package parser
 
+//go:generate go-ultra-enum
 type ColorEnum struct {
 	Red       string `enum:"RED"`
 	LightBlue string `enum:"LIGHT_BLUE"`

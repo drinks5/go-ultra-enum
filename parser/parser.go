@@ -43,12 +43,12 @@ type Parser struct {
 	buf bytes.Buffer // Accumulated output.
 }
 
-func (p *Parser) Packages(patterns []string) {
+func (p *Parser) Packages(pattern string) {
 	cfg := &packages.Config{
 		Mode:  packages.LoadTypes | packages.NeedSyntax | packages.NeedTypesInfo,
 		Tests: false,
 	}
-	pkgs, err := packages.Load(cfg, patterns...)
+	pkgs, err := packages.Load(cfg, pattern)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -73,7 +73,7 @@ func (p *Parser) addPackage(pkg *packages.Package) {
 	}
 }
 
-func (p *Parser) Generate() (ret []*Enum) {
+func (p *Parser) Generate() {
 	fset := token.NewFileSet()
 	parserMode := parser.ParseComments
 	var fileAst *ast.File
@@ -89,7 +89,6 @@ func (p *Parser) Generate() (ret []*Enum) {
 	for _, enum := range enums {
 		p.Render(Tpl, enum)
 	}
-	return enums
 }
 func (p *Parser) Sink(dir string) {
 	src := p.format()
@@ -97,7 +96,7 @@ func (p *Parser) Sink(dir string) {
 	// Write to file.
 	outputName := dir
 	if outputName == "" {
-		outputName = filepath.Join(dir, "enum.go")
+		outputName = filepath.Join(dir, "enumer.go")
 	}
 	err := ioutil.WriteFile(outputName, src, 0644)
 	if err != nil {
@@ -119,7 +118,7 @@ func getEnumsFromFile(specs []ast.Decl) (enums []*Enum) {
 	for _, spec := range specs {
 		decl, ok := spec.(*ast.GenDecl)
 		if !ok || decl.Tok != token.TYPE {
-			return
+			continue
 		}
 		for _, spec := range decl.Specs {
 			vspec := spec.(*ast.TypeSpec)

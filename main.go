@@ -7,13 +7,15 @@ import (
 )
 
 var (
+	file   = flag.String("file", "", "The file(s) to generate enums.  Use more than one flag for more files.")
 	output = flag.String("output", "", "output file name; default srcdir/enumer.go")
 )
 
 func main() {
 	p := parser.Parser{}
-	args := flag.Args()
-	p.Packages(args)
+	flag.Parse()
+
+	p.Packages(*file)
 	p.Render(parser.Header, p.Pkg)
 	p.Generate()
 	p.Sink(*output)
