@@ -2,6 +2,7 @@ package parser
 
 import (
 	"bytes"
+	"fmt"
 	"go/ast"
 	"go/format"
 	"go/parser"
@@ -39,8 +40,7 @@ type EnumElement struct {
 	Tpe         string
 }
 type Parser struct {
-	Pkg *Package     // Package we are scanning.
-	buf bytes.Buffer // Accumulated output.
+	Pkg *Package // Package we are scanning.
 }
 
 func (p *Parser) Packages(pattern string) {
@@ -73,44 +73,50 @@ func (p *Parser) addPackage(pkg *packages.Package) {
 	}
 }
 
-func (p *Parser) Generate() {
+func (p *Parser) Generate(dir string) {
 	fset := token.NewFileSet()
 	parserMode := parser.ParseComments
 	var fileAst *ast.File
 	var err error
-	var enums []*Enum
 	for _, file := range p.Pkg.files {
 		fileAst, err = parser.ParseFile(fset, file.name, nil, parserMode)
 		if err != nil {
 			log.Fatal(err)
 		}
-		enums = append(enums, getEnumsFromFile(fileAst.Decls)...)
-	}
-	for _, enum := range enums {
-		p.Render(Tpl, enum)
+		enums := getEnumsFromFile(fileAst.Decls)
+		if len(enums) == 0 {
+			continue
+		}
+		buf := bytes.Buffer{}
+		p.Render(&buf, Header, p.Pkg)
+		for _, enum := range enums {
+			p.Render(&buf, Tpl, enum)
+		}
+		filename := fmt.Sprintf("%s_enum.go", fileNameWithoutExtension(file.name))
+		src := p.format(&buf)
+		p.Sink(src, dir, filename)
 	}
 }
-func (p *Parser) Sink(dir string) {
-	src := p.format()
+func (p *Parser) Sink(src []byte, dir string, filename string) {
 
 	// Write to file.
 	outputName := dir
 	if outputName == "" {
-		outputName = filepath.Join(dir, "enumer.go")
+		outputName = filepath.Join(dir, filename)
 	}
 	err := ioutil.WriteFile(outputName, src, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
-func (p *Parser) format() []byte {
-	src, err := format.Source(p.buf.Bytes())
+func (p *Parser) format(buf *bytes.Buffer) []byte {
+	src, err := format.Source(buf.Bytes())
 	if err != nil {
 		// Should never happen, but can arise when developing this code.
 		// The user can compile the output to see the error.
 		log.Printf("warning: internal error: invalid Go generated: %s", err)
 		log.Printf("warning: compile the package to analyze the error")
-		return p.buf.Bytes()
+		return buf.Bytes()
 	}
 	return src
 }
@@ -172,14 +178,14 @@ func LcFirst(str string) string {
 	}
 	return ""
 }
-func (p *Parser) Render(tmpl string, model interface{}) {
+func (p *Parser) Render(buf *bytes.Buffer, tmpl string, model interface{}) {
 	funcMap := template.FuncMap{
 		"ToUpper": strings.ToUpper,
 		"ToLower": strings.ToLower,
 		"LcFirst": LcFirst,
 	}
 	t := template.Must(template.New(tmpl).Funcs(funcMap).Parse(tmpl))
-	err := t.Execute(&p.buf, model)
+	err := t.Execute(buf, model)
 	if err != nil {
 		log.Fatal("Execute: ", err)
 		return
@@ -249,4 +255,8 @@ func parseStructTag(tag string, key string) (value string, ok bool) {
 		}
 	}
 	return "", false
+}
+
+func fileNameWithoutExtension(fileName string) string {
+	return strings.TrimSuffix(fileName, filepath.Ext(fileName))
 }

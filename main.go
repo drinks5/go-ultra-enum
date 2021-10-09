@@ -16,7 +16,5 @@ func main() {
 	flag.Parse()
 
 	p.Packages(*file)
-	p.Render(parser.Header, p.Pkg)
-	p.Generate()
-	p.Sink(*output)
+	p.Generate("")
 }
