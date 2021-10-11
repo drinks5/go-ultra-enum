@@ -2,13 +2,15 @@ package parser
 
 //go:generate go-ultra-enum
 type ColorEnum struct {
-	Red       int `enum:"2"`
-	LightBlue int `enum:"1"`
+	Red   int `enum:"1"`
+	Blue  int `enum:"2"`
+	Grenn int `enum:"3"`
 }
 
-type GeoEnum struct {
-	Lat int64 `enum:"2"`
-	Lon int64 `enum:"1"`
+type CountryEnum struct {
+	China    int64 `enum:"1"`
+	America  int64 `enum:"2"`
+	Sinapore int64 `enum:"3"`
 }
 
 // generate an enum with default display values. The display values are set to the field names, e.g. `On` and `Off`
