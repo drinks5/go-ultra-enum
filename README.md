@@ -65,34 +65,29 @@ When a description is defined the json is serialized as follows (not yet impleme
 
 The generated code would yield the following consumer api
 
-### Create an enum value
+### Get an enum value
 
 ```go
-a := Red // OR var a Color = Red
+Color.Red
 ```
 
-### Create an enum from a factory method
-
-```go
-var name Color = NewColor("RED")
-```
 
 ### Get the display value
 
 ```go
-var name string = a.Name() // "RED"
+var name string = a.Name // "RED"
 ```
 
 ### Get all display values
 
 ```go
-var names []string = ColorNames() // []string{"RED", "BLUE"}
+var names []string = Color.Names() // []string{"RED", "BLUE"}
 ```
 
 ### Get all values
 
 ```go
-var values []Color = ColorValues() // []string{Red, Blue}
+var values []Color = Color.Values() // []string{Red, Blue}
 ```
 
 ### Pass as an error

@@ -12,6 +12,20 @@ type {{.NewName | LcFirst}}Ele struct {
     Value {{.Tpe}}
     Description string
 }
+func (n *{{.NewName | LcFirst}}Enum)Names() []string{
+    return []string{
+        {{- range $e := .Elements}}
+            "{{.Name}}",
+        {{- end}}
+    }
+}
+func (n *{{.NewName | LcFirst}}Enum)Values() []{{.Tpe}}{
+    return []{{.Tpe}}{
+        {{- range $e := .Elements}}
+            {{if eq .Tpe "string"}}"{{.Value}}"{{else}}{{.Value}}{{end}},
+        {{- end}}
+    }
+}
 
 var {{.NewName}} = {{.NewName | LcFirst }}Enum{
 {{- range $e := .Elements}}

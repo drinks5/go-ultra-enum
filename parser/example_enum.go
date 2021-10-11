@@ -11,6 +11,19 @@ type colorEle struct {
 	Description string
 }
 
+func (n *colorEnum) Names() []string {
+	return []string{
+		"Red",
+		"LightBlue",
+	}
+}
+func (n *colorEnum) Values() []int {
+	return []int{
+		2,
+		1,
+	}
+}
+
 var Color = colorEnum{
 	Red:       colorEle{Name: "Red", Value: 2, Description: ""},
 	LightBlue: colorEle{Name: "LightBlue", Value: 1, Description: ""},
@@ -24,6 +37,19 @@ type geoEle struct {
 	Name        string
 	Value       int64
 	Description string
+}
+
+func (n *geoEnum) Names() []string {
+	return []string{
+		"Lat",
+		"Lon",
+	}
+}
+func (n *geoEnum) Values() []int64 {
+	return []int64{
+		2,
+		1,
+	}
 }
 
 var Geo = geoEnum{
@@ -41,6 +67,19 @@ type statusEle struct {
 	Description string
 }
 
+func (n *statusEnum) Names() []string {
+	return []string{
+		"On",
+		"Off",
+	}
+}
+func (n *statusEnum) Values() []bool {
+	return []bool{
+		true,
+		false,
+	}
+}
+
 var Status = statusEnum{
 	On:  statusEle{Name: "On", Value: true, Description: ""},
 	Off: statusEle{Name: "Off", Value: false, Description: ""},
@@ -55,6 +94,21 @@ type sushiEle struct {
 	Name        string
 	Value       string
 	Description string
+}
+
+func (n *sushiEnum) Names() []string {
+	return []string{
+		"Maki",
+		"Temaki",
+		"Sashimi",
+	}
+}
+func (n *sushiEnum) Values() []string {
+	return []string{
+		"MAKI",
+		"TEMAKI",
+		"SASHIMI",
+	}
 }
 
 var Sushi = sushiEnum{
