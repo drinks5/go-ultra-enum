@@ -7,9 +7,9 @@ import (
 )
 
 type colorEnum struct {
-	Red   colorEle
-	Blue  colorEle
-	Grenn colorEle
+	Red   ColorEle
+	Blue  ColorEle
+	Grenn ColorEle
 }
 
 func (x *colorEnum) Names() []string {
@@ -26,41 +26,41 @@ func (x *colorEnum) Values() []int {
 		3,
 	}
 }
-func (x *colorEnum) UnMarshalName(name string) (*colorEle, error) {
+func (x *colorEnum) UnMarshalName(name string) (*ColorEle, error) {
 	if val, ok := colorEnumNameMap[name]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%s does not belong to names", name)
 }
-func (x *colorEnum) UnMarshalValue(value int) (*colorEle, error) {
+func (x *colorEnum) UnMarshalValue(value int) (*ColorEle, error) {
 	if val, ok := colorEnumValueMap[value]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%v does not belong to values", value)
 }
 
-type colorEle struct {
+type ColorEle struct {
 	Name        string
 	Value       int
 	Description string
 }
 
-func (x *colorEle) MarshalJson() ([]byte, error) {
+func (x *ColorEle) MarshalJson() ([]byte, error) {
 	return json.Marshal(x)
 }
 
 var (
 	Color = colorEnum{
-		Red:   colorEle{Name: "Red", Value: 1, Description: ""},
-		Blue:  colorEle{Name: "Blue", Value: 2, Description: ""},
-		Grenn: colorEle{Name: "Grenn", Value: 3, Description: ""},
+		Red:   ColorEle{Name: "Red", Value: 1, Description: ""},
+		Blue:  ColorEle{Name: "Blue", Value: 2, Description: ""},
+		Grenn: ColorEle{Name: "Grenn", Value: 3, Description: ""},
 	}
-	colorEnumNameMap = map[string]*colorEle{
+	colorEnumNameMap = map[string]*ColorEle{
 		"Red":   &Color.Red,
 		"Blue":  &Color.Blue,
 		"Grenn": &Color.Grenn,
 	}
-	colorEnumValueMap = map[int]*colorEle{
+	colorEnumValueMap = map[int]*ColorEle{
 		1: &Color.Red,
 		2: &Color.Blue,
 		3: &Color.Grenn,
@@ -68,9 +68,9 @@ var (
 )
 
 type countryEnum struct {
-	China    countryEle
-	America  countryEle
-	Sinapore countryEle
+	China    CountryEle
+	America  CountryEle
+	Sinapore CountryEle
 }
 
 func (x *countryEnum) Names() []string {
@@ -87,41 +87,41 @@ func (x *countryEnum) Values() []int64 {
 		3,
 	}
 }
-func (x *countryEnum) UnMarshalName(name string) (*countryEle, error) {
+func (x *countryEnum) UnMarshalName(name string) (*CountryEle, error) {
 	if val, ok := countryEnumNameMap[name]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%s does not belong to names", name)
 }
-func (x *countryEnum) UnMarshalValue(value int64) (*countryEle, error) {
+func (x *countryEnum) UnMarshalValue(value int64) (*CountryEle, error) {
 	if val, ok := countryEnumValueMap[value]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%v does not belong to values", value)
 }
 
-type countryEle struct {
+type CountryEle struct {
 	Name        string
 	Value       int64
 	Description string
 }
 
-func (x *countryEle) MarshalJson() ([]byte, error) {
+func (x *CountryEle) MarshalJson() ([]byte, error) {
 	return json.Marshal(x)
 }
 
 var (
 	Country = countryEnum{
-		China:    countryEle{Name: "China", Value: 1, Description: ""},
-		America:  countryEle{Name: "America", Value: 2, Description: ""},
-		Sinapore: countryEle{Name: "Sinapore", Value: 3, Description: ""},
+		China:    CountryEle{Name: "China", Value: 1, Description: ""},
+		America:  CountryEle{Name: "America", Value: 2, Description: ""},
+		Sinapore: CountryEle{Name: "Sinapore", Value: 3, Description: ""},
 	}
-	countryEnumNameMap = map[string]*countryEle{
+	countryEnumNameMap = map[string]*CountryEle{
 		"China":    &Country.China,
 		"America":  &Country.America,
 		"Sinapore": &Country.Sinapore,
 	}
-	countryEnumValueMap = map[int64]*countryEle{
+	countryEnumValueMap = map[int64]*CountryEle{
 		1: &Country.China,
 		2: &Country.America,
 		3: &Country.Sinapore,
@@ -129,8 +129,8 @@ var (
 )
 
 type statusEnum struct {
-	On  statusEle
-	Off statusEle
+	On  StatusEle
+	Off StatusEle
 }
 
 func (x *statusEnum) Names() []string {
@@ -145,48 +145,48 @@ func (x *statusEnum) Values() []bool {
 		false,
 	}
 }
-func (x *statusEnum) UnMarshalName(name string) (*statusEle, error) {
+func (x *statusEnum) UnMarshalName(name string) (*StatusEle, error) {
 	if val, ok := statusEnumNameMap[name]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%s does not belong to names", name)
 }
-func (x *statusEnum) UnMarshalValue(value bool) (*statusEle, error) {
+func (x *statusEnum) UnMarshalValue(value bool) (*StatusEle, error) {
 	if val, ok := statusEnumValueMap[value]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%v does not belong to values", value)
 }
 
-type statusEle struct {
+type StatusEle struct {
 	Name        string
 	Value       bool
 	Description string
 }
 
-func (x *statusEle) MarshalJson() ([]byte, error) {
+func (x *StatusEle) MarshalJson() ([]byte, error) {
 	return json.Marshal(x)
 }
 
 var (
 	Status = statusEnum{
-		On:  statusEle{Name: "On", Value: true, Description: ""},
-		Off: statusEle{Name: "Off", Value: false, Description: ""},
+		On:  StatusEle{Name: "On", Value: true, Description: ""},
+		Off: StatusEle{Name: "Off", Value: false, Description: ""},
 	}
-	statusEnumNameMap = map[string]*statusEle{
+	statusEnumNameMap = map[string]*StatusEle{
 		"On":  &Status.On,
 		"Off": &Status.Off,
 	}
-	statusEnumValueMap = map[bool]*statusEle{
+	statusEnumValueMap = map[bool]*StatusEle{
 		true:  &Status.On,
 		false: &Status.Off,
 	}
 )
 
 type sushiEnum struct {
-	Maki    sushiEle
-	Temaki  sushiEle
-	Sashimi sushiEle
+	Maki    SushiEle
+	Temaki  SushiEle
+	Sashimi SushiEle
 }
 
 func (x *sushiEnum) Names() []string {
@@ -203,41 +203,41 @@ func (x *sushiEnum) Values() []string {
 		"SASHIMI",
 	}
 }
-func (x *sushiEnum) UnMarshalName(name string) (*sushiEle, error) {
+func (x *sushiEnum) UnMarshalName(name string) (*SushiEle, error) {
 	if val, ok := sushiEnumNameMap[name]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%s does not belong to names", name)
 }
-func (x *sushiEnum) UnMarshalValue(value string) (*sushiEle, error) {
+func (x *sushiEnum) UnMarshalValue(value string) (*SushiEle, error) {
 	if val, ok := sushiEnumValueMap[value]; ok {
 		return val, nil
 	}
 	return nil, fmt.Errorf("%v does not belong to values", value)
 }
 
-type sushiEle struct {
+type SushiEle struct {
 	Name        string
 	Value       string
 	Description string
 }
 
-func (x *sushiEle) MarshalJson() ([]byte, error) {
+func (x *SushiEle) MarshalJson() ([]byte, error) {
 	return json.Marshal(x)
 }
 
 var (
 	Sushi = sushiEnum{
-		Maki:    sushiEle{Name: "Maki", Value: "MAKI", Description: "Rice and filling wrapped in seaweed"},
-		Temaki:  sushiEle{Name: "Temaki", Value: "TEMAKI", Description: "Hand rolled into a cone shape"},
-		Sashimi: sushiEle{Name: "Sashimi", Value: "SASHIMI", Description: "Fish or shellfish served alone without rice"},
+		Maki:    SushiEle{Name: "Maki", Value: "MAKI", Description: "Rice and filling wrapped in seaweed"},
+		Temaki:  SushiEle{Name: "Temaki", Value: "TEMAKI", Description: "Hand rolled into a cone shape"},
+		Sashimi: SushiEle{Name: "Sashimi", Value: "SASHIMI", Description: "Fish or shellfish served alone without rice"},
 	}
-	sushiEnumNameMap = map[string]*sushiEle{
+	sushiEnumNameMap = map[string]*SushiEle{
 		"Maki":    &Sushi.Maki,
 		"Temaki":  &Sushi.Temaki,
 		"Sashimi": &Sushi.Sashimi,
 	}
-	sushiEnumValueMap = map[string]*sushiEle{
+	sushiEnumValueMap = map[string]*SushiEle{
 		"MAKI":    &Sushi.Maki,
 		"TEMAKI":  &Sushi.Temaki,
 		"SASHIMI": &Sushi.Sashimi,
