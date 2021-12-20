@@ -52,6 +52,12 @@ func (p *Parser) Packages(pattern string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	for _, pkg := range pkgs {
+		// file does not exist!
+		if pkg.Errors != nil {
+			log.Fatalln(pkg.Errors[0].Msg)
+		}
+	}
 	if len(pkgs) != 1 {
 		log.Fatalf("error: %d packages found", len(pkgs))
 	}
